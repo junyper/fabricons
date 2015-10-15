@@ -4,7 +4,7 @@ const destination = './dist/';
 const svg = {
   source: source + 'sketch/*.sketch',
   destination: destination + 'icons/',
-  sizes: [
+  sizes: [ // leave this out if you only want full size
     { name: 'sm', size: 16, box: 18 },
     { name: 'md', size: 20, box: 24 },
     { name: 'lg', size: 30, box: 32 }
