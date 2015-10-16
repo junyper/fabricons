@@ -1,6 +1,6 @@
 import gulp from 'gulp';
 import sequence from 'gulp-sequence';
-import config from '../build.config';
+import config from '../config';
 
 gulp.task('build-icons', (cb) => {
   var tasks = [ 'generate-data' ];

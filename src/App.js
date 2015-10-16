@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 
 export default class App extends Component {
   render() {
+    var style = {
+      width: '100vw',
+      height: '100vh'
+    };
     return (
-      <h1>Hello, world.</h1>
+      <iframe src="/fonts/Bold/FabriconsBold.html" style={style}></iframe>
     );
   }
 }

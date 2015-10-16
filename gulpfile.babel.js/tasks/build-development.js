@@ -5,7 +5,7 @@ gulp.task('build-development', (cb) => {
   sequence(
     'clean',
     'build-icons',
-    [ 'webpack-dev-server', 'watch' ],
+    [ 'webpack-watch', 'watch' ],
     cb
   );
 });

@@ -2,7 +2,9 @@ import gulp from 'gulp';
 import svgstore from 'gulp-svgstore';
 import sequence from 'gulp-sequence';
 import fs from 'fs';
-import { sprites as config } from '../build.config';
+import { sprites as config } from '../config';
+import handleErrors from '../lib/handle-errors';
+import browserSync from 'browser-sync';
 
 var createSpriteTask = (variant) => {
   var key = 'sprite-' + variant;
@@ -10,7 +12,9 @@ var createSpriteTask = (variant) => {
   gulp.task(key, () => {
     return gulp.src(config.source + variant + '/*.svg')
       .pipe(svgstore())
-      .pipe(gulp.dest(config.destination));
+      .on('error', handleErrors)
+      .pipe(gulp.dest(config.destination))
+      .pipe(browserSync.reload({ stream: true }));
   });
   return key;
 };

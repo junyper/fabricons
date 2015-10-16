@@ -7,8 +7,8 @@ Generates one or more icon sets from Sketch files for multiple platforms (web, i
 Fabricons outputs:
 
 - SVG files, icon font and SVG sprite optimized for web
-- SVG files with [configurable](build.config.js) bounding boxes/margins for Android
-- PDF files with [configurable](build.config.js) bounding boxes/margins for iOS
+- SVG files with [configurable](gulpfile.babel.js/config.js) bounding boxes/margins for Android
+- PDF files with [configurable](gulpfile.babel.js/config.js) bounding boxes/margins for iOS
 
 ## Requirements
 
@@ -17,16 +17,16 @@ Fabricons outputs:
 
 ## Set Up
 
-- Run `./install.sh` to install dependencies.
-- Run `npm start` to start the [local server](http://localhost:4004) and watch for changes.
+- In the console run `./install.sh` to install dependencies.
+- In the console run `gulp` to start the [local server](http://localhost:3002) and watch for changes.
 
 ## How It Works
 
 - In the .sketch files in `/src/sketch` there are 1920x1920 artboards for each icon set variant. The artboard name is the name of the icon (close, add, etc.) with a prefix of the variant, like `bold/close` and `light/close`.
 
-- When you save in Sketch with the `npm start` script running, the artboards will be exported in SVG to the `./dist` directory, or according to the [configuration](build.config.js), automatically via `gulp-sketch`, creating directories for each variant based on the artboard names.
+- When you save in Sketch with the `npm start` script running, the artboards will be exported in SVG to the `./generated` directory, or according to the [configuration](build.config.js), automatically via `gulp-sketch`, creating directories for each variant based on the artboard names.
 
-- After exporting, gulp will take the SVG files generated for each variant and resize, minify, and package them for various platforms (web, iOS, Android) as individual SVG files, SVG sprites, pdf documents and icon fonts. You can see the result in the `/dist` directory.
+- After exporting, gulp will take the SVG files generated for each variant and resize, minify, and package them for various platforms (web, iOS, Android) as individual SVG files, SVG sprites, pdf documents and icon fonts. You can see the result in the `/generated` directory.
 
 ## Adding and Modifying Icons
 
@@ -34,7 +34,7 @@ Fabricons outputs:
 
 - Save new icon files in the `/src/sketch` directory.
 
-- Run `npm start` to start the local server and watch for changes to the sketch files and generate the various formats. You will need to restart this script after you create new .sketch files.
+- Run `gulp` to start the local server and watch for changes to the sketch files and generate the various formats.
 
 ## Guidelines for Drawing Icons
 
@@ -58,7 +58,7 @@ Fabricons outputs:
 
 There's a small web app for testing all the icons. You can see all the icons at once, in different sizes and formats.
 
-If you ran `npm start`, you're already running the web app. Just visit [localhost:4004](http://localhost:4004).
+If you ran `npm start`, you're already running the web app. Just visit [localhost:2992](http://localhost:3002).
 
 ## Inspiration
 

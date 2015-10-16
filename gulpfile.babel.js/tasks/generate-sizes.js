@@ -4,15 +4,18 @@ import rename from 'gulp-rename';
 import sequence from 'gulp-sequence';
 import convert from 'gulp-rsvg';
 import fs from 'fs';
+import handleErrors from '../lib/handle-errors';
+import browserSync from 'browser-sync';
 
-import { svg as config } from '../build.config';
+import { svg as config } from '../config';
 
 var getUnits = (size, box) => {
   // Hard coded to 1920 x 1920 SVGs…
-  var boxDelta = box - size,
-      boundingUnits = ((1920 / size) * boxDelta),
-      viewBoxValue = 1920 + boundingUnits,
-      translateDiff = boundingUnits / 2;
+  var boxDelta = box - size;
+  var boundingUnits = ((1920 / size) * boxDelta);
+  var viewBoxValue = 1920 + boundingUnits;
+  var translateDiff = boundingUnits / 2;
+
   return {
     viewBox: `0 0 ${viewBoxValue} ${viewBoxValue}`,
     translate: `translate(${translateDiff} ${translateDiff})`
@@ -20,9 +23,9 @@ var getUnits = (size, box) => {
 };
 
 var createSizeTask = (variant, size) => {
-  var key = variant + '-' + size.name,
-      units = getUnits(size.size, size.box),
-      path = config.destination + variant;
+  var key = variant + '-' + size.name;
+  var units = getUnits(size.size, size.box);
+  var path = config.destination + variant;
 
   gulp.task(key, () => {
     gulp.src(path + '/*.svg')
@@ -60,15 +63,17 @@ var createSizeTask = (variant, size) => {
       }
     }))
     .pipe(convert({ format: 'pdf' }))
-    .pipe(gulp.dest(path + '/ios/'));
+    .on('error', handleErrors)
+    .pipe(gulp.dest(path + '/ios/'))
+    .pipe(browserSync.reload({ stream: true }));
   });
   return key;
 };
 
 
 gulp.task('generate-sizes', ['generate-svgs'], (cb) => {
-  var variants = fs.readdirSync(config.destination),
-      sizeTasks = [];
+  var variants = fs.readdirSync(config.destination);
+  var sizeTasks = [];
 
   variants.forEach((variant) => {
     config.sizes.forEach((size) => {

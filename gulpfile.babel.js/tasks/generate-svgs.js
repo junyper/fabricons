@@ -2,8 +2,10 @@ import gulp from 'gulp';
 import sketch from 'gulp-sketch';
 import svgmin from 'gulp-svgmin';
 import cheerio from 'gulp-cheerio';
+import handleErrors from '../lib/handle-errors';
+import browserSync from 'browser-sync';
 
-import { svg as config } from '../build.config';
+import { svg as config } from '../config';
 
 gulp.task('generate-svgs', () => {
   return gulp.src(config.source)
@@ -34,7 +36,9 @@ gulp.task('generate-svgs', () => {
         xmlMode: true
       }
     }))
-    .pipe(gulp.dest(config.destination));
+    .on('error', handleErrors)
+    .pipe(gulp.dest(config.destination))
+    .pipe(browserSync.reload({ stream: true }));
 });
 
 

@@ -4,15 +4,17 @@ import consolidate from 'gulp-consolidate';
 import fs from 'fs';
 import sequence from 'gulp-sequence';
 import rename from 'gulp-rename';
-import { fonts as config } from '../../build.config';
+import { fonts as config } from '../../config';
+import handleErrors from '../../lib/handle-errors';
+import browserSync from 'browser-sync';
 
 var createFontTask = (variant) => {
-  var key = 'font-' + variant,
-      taskDir = './tasks/generate-fonts/',
-      destination = config.destination + variant,
-      fontName = config.fontName + variant,
-      formats = config.formats,
-      className = config.className;
+  var key = 'font-' + variant;
+  var taskDir = './gulpfile.babel.js/tasks/generate-fonts/';
+  var destination = config.destination + variant;
+  var fontName = config.fontName + variant;
+  var formats = config.formats;
+  var className = config.className;
 
   gulp.task(key, () => {
     return gulp.src(config.source + variant + '/*.svg')
@@ -37,15 +39,19 @@ var createFontTask = (variant) => {
         // build css
         gulp.src(taskDir + 'template.css')
           .pipe(consolidate('lodash', options))
+          .on('error', handleErrors)
           .pipe(rename({ basename: fontName }))
           .pipe(gulp.dest(destination));
         // build example html
         gulp.src(taskDir + 'template.html')
           .pipe(consolidate('lodash', options))
+          .on('error', handleErrors)
           .pipe(rename({ basename: fontName }))
           .pipe(gulp.dest(destination));
       })
-      .pipe(gulp.dest(destination));
+      .on('error', handleErrors)
+      .pipe(gulp.dest(destination))
+      .pipe(browserSync.reload({ stream: true }));
   });
   return key;
 };

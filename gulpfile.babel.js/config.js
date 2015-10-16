@@ -1,8 +1,8 @@
 const source = './src/';
-const destination = './dist/';
+const destination = './generated/';
 
 const svg = {
-  source: source + 'sketch/*.sketch',
+  source: source + 'sketch/**/*.sketch',
   destination: destination + 'icons/',
   sizes: [ // leave this out if you only want full size
     { name: 'sm', size: 16, box: 18 },
@@ -14,7 +14,7 @@ const svg = {
 const fonts = {
   source: svg.destination, // variant is added to path
   destination: destination + 'fonts/',
-  fontName: 'Icons',
+  fontName: 'Fabricons',
   className: 'icon',
   formats: ['woff2', 'woff', 'eot', 'ttf', 'svg']
 };
