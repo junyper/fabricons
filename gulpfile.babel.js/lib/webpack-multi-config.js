@@ -35,7 +35,7 @@ module.exports = function (env) {
       loaders: [
         {
           test: /\.js$/,
-          loader: 'babel?stage=1',
+          loader: 'babel?optional=runtime&stage=1',
           exclude: /node_modules/
         },
         {

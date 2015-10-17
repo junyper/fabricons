@@ -3,7 +3,7 @@ import sequence from 'gulp-sequence';
 import config from '../config';
 
 gulp.task('build-icons', (cb) => {
-  var tasks = [ 'generate-data' ];
+  var tasks = [];
 
   if (config.fonts) {
     tasks.push('generate-fonts');

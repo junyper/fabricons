@@ -13,9 +13,14 @@ gulp.task('generate-data', ['generate-svgs'], () => {
     .pipe(jeditor({
       icons: glob.sync(config.svg.source).map((file) => path.basename(file, path.extname(file))),
       variants: fs.readdirSync(config.svg.destination),
+      fonts: glob.sync(config.fonts.destination + '**/*.html').map((file) => {
+        return {
+          path: path.relative(config.destination, file),
+          name: path.basename(file, path.extname(file))
+        };
+      }),
       sizes: config.svg.sizes,
-      sprites: !!config.sprites,
-      fonts: !!config.fonts
+      sprites: !!config.sprites
     }))
     .pipe(rename('data.json'))
     .on('error', handleErrors)
