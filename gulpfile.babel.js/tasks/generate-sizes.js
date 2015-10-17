@@ -9,7 +9,7 @@ import browserSync from 'browser-sync';
 
 import { svg as config } from '../config';
 
-var getUnits = (size, box) => {
+var getUnits = function (size, box) {
   // Hard coded to 1920 x 1920 SVGs…
   var boxDelta = box - size;
   var boundingUnits = ((1920 / size) * boxDelta);
@@ -22,7 +22,7 @@ var getUnits = (size, box) => {
   };
 };
 
-var createSizeTask = (variant, size) => {
+var createSizeTask = function (variant, size) {
   var key = variant + '-' + size.name;
   var units = getUnits(size.size, size.box);
   var path = config.destination + variant;
@@ -30,7 +30,7 @@ var createSizeTask = (variant, size) => {
   gulp.task(key, () => {
     gulp.src(path + '/*.svg')
     .pipe(rename({
-      suffix: '_' + size.name
+      suffix: size.suffix
     }))
     .pipe(cheerio({
       run: ($, file, done) => {
@@ -50,6 +50,7 @@ var createSizeTask = (variant, size) => {
       }
     }))
     .pipe(gulp.dest(path + '/android/'))
+
     .pipe(cheerio({
       run: ($, file, done) => {
         $('svg').attr({
@@ -65,13 +66,14 @@ var createSizeTask = (variant, size) => {
     .pipe(convert({ format: 'pdf' }))
     .on('error', handleErrors)
     .pipe(gulp.dest(path + '/ios/'))
+
     .pipe(browserSync.reload({ stream: true }));
   });
   return key;
 };
 
 
-gulp.task('generate-sizes', ['generate-svgs'], (cb) => {
+gulp.task('generate-sizes', ['generate-svgs'], function (cb) {
   var variants = fs.readdirSync(config.destination);
   var sizeTasks = [];
 

@@ -8,7 +8,7 @@ import { fonts as config } from '../../config';
 import handleErrors from '../../lib/handle-errors';
 import browserSync from 'browser-sync';
 
-var createFontTask = (variant) => {
+var createFontTask = function (variant) {
   var key = 'font-' + variant;
   var taskDir = './gulpfile.babel.js/tasks/generate-fonts/';
   var destination = config.destination + variant;

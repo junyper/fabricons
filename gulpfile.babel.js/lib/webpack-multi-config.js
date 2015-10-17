@@ -11,7 +11,7 @@ import csswring from 'csswring';
 import postcssDiscardDuplicates from 'postcss-discard-duplicates';
 import CompressionPlugin from 'compression-webpack-plugin';
 
-module.exports = function (env) {
+export default function (env) {
   var publicPath = '/';
   var filename = env === 'production' ? '[name]-[hash].js' : '[name].js';
 

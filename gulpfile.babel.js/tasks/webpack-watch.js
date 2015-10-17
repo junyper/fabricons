@@ -4,16 +4,17 @@ import webpackMultiConfig from '../lib/webpack-multi-config';
 import browserSync from 'browser-sync';
 import logger from '../lib/compile-logger';
 
-gulp.task('webpack-watch', (callback) => {
-  var initialCompile = false
+gulp.task('webpack-watch', function (cb) {
+  var initialCompile = false;
 
-  webpack(webpackMultiConfig('development')).watch(200, (err, stats) => {
+  webpack(webpackMultiConfig('development'))
+  .watch(200, (err, stats) => {
     logger(err, stats);
-    browserSync.reload()
+    browserSync.reload();
     // On the initial compile, let gulp know the task is done
     if (!initialCompile) {
-      initialCompile = true
-      callback()
+      initialCompile = true;
+      cb();
     }
-  })
+  });
 });

@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <title>Demo <%= size %></title>
+    <style>
+      body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; text-align: center; background: #f7f7f7 }
+      body > h1 { color: #666; margin: 1em 0 }
+      .glyph { padding: 0 }
+      .glyph > li { display: inline-block; margin: .3em .2em; padding: .5em; background: #fff; border-radius: .5em; position: relative }
+      .glyph-name { font-size: .8em; color: #666; display: block }
+    </style>
+  </head>
+  <body>
+    <h1><%= size %></h1>
+    <% _.each(variants, function(variant) { %>
+      <h2><%= variant.name %></h2>
+
+      <ul class="glyph"><% _.each(variant.glyphs, function(glyph) { %>
+        <li>
+          <img src="/<%= glyph.path %>" />
+          <span class="glyph-name"><%= glyph.name %></span>
+        </li><% }); %>
+      </ul>
+    <% }); %>
+  </body>
+</html>

@@ -7,7 +7,7 @@ import browserSync from 'browser-sync';
 
 import { svg as config } from '../config';
 
-gulp.task('generate-svgs', () => {
+gulp.task('generate-svgs', function () {
   return gulp.src(config.source)
     // export svgs from sketch source
     .pipe(sketch({

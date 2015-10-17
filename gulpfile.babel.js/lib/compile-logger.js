@@ -1,8 +1,8 @@
 import gutil from 'gulp-util';
 import handleErrors from './handle-errors';
-import prettifyTime from './prettify-time';
+import prettyTime from './pretty-time';
 
-module.exports = (err, stats) => {
+export default function (err, stats) {
   if (err) {
     throw new gutil.PluginError('webpack', err);
   }
@@ -15,8 +15,8 @@ module.exports = (err, stats) => {
       statColor = 'red';
     });
   } else {
-    var compileTime = prettifyTime(stats.endTime - stats.startTime);
+    var compileTime = prettyTime(stats.endTime - stats.startTime);
     gutil.log(gutil.colors[statColor](stats));
-    gutil.log('Compiled with', gutil.colors.cyan('webpack'), 'in', gutil.colors.magenta(compileTime))
+    gutil.log('Compiled with', gutil.colors.cyan('webpack'), 'in', gutil.colors.magenta(compileTime));
   }
 };

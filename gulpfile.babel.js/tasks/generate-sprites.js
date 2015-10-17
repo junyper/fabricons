@@ -6,7 +6,7 @@ import { sprites as config } from '../config';
 import handleErrors from '../lib/handle-errors';
 import browserSync from 'browser-sync';
 
-var createSpriteTask = (variant) => {
+var createSpriteTask = function (variant) {
   var key = 'sprite-' + variant;
 
   gulp.task(key, () => {
@@ -19,7 +19,7 @@ var createSpriteTask = (variant) => {
   return key;
 };
 
-gulp.task('generate-sprites', ['generate-svgs'], (cb) => {
+gulp.task('generate-sprites', ['generate-svgs'], function (cb) {
   var variants = fs.readdirSync(config.source);
   var spriteTasks = [];
 

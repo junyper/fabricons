@@ -2,7 +2,7 @@ import gulp from 'gulp';
 import sequence from 'gulp-sequence';
 import config from '../config';
 
-gulp.task('build-icons', (cb) => {
+gulp.task('build-icons', function (cb) {
   var tasks = [];
 
   if (config.fonts) {
@@ -19,6 +19,8 @@ gulp.task('build-icons', (cb) => {
 
   sequence(
     tasks,
+    'generate-demo',
+    'generate-data',
     cb
   );
 });
