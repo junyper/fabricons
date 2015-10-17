@@ -4,20 +4,21 @@ import consolidate from 'gulp-consolidate';
 import fs from 'fs';
 import sequence from 'gulp-sequence';
 import rename from 'gulp-rename';
-import { fonts as config } from '../../config';
+import config from '../../config';
 import handleErrors from '../../lib/handle-errors';
 import browserSync from 'browser-sync';
+import path from 'path';
 
 var createFontTask = function (variant) {
   var key = 'font-' + variant;
   var taskDir = './gulpfile.babel.js/tasks/generate-fonts/';
-  var destination = config.destination + variant;
-  var fontName = config.fontName + variant;
-  var formats = config.formats;
-  var className = config.className;
+  var destination = config.fonts.destination + variant;
+  var fontName = config.fonts.fontName + variant;
+  var formats = config.fonts.formats;
+  var className = config.fonts.className;
 
   gulp.task(key, () => {
-    return gulp.src(config.source + variant + '/*.svg')
+    return gulp.src(config.fonts.source + variant + '/*.svg')
       // generate font
       .pipe(iconfont({
         svg: true,
@@ -34,20 +35,20 @@ var createFontTask = function (variant) {
           }),
           fontName,
           className,
-          fontPath: ''
+          fontPath: path.normalize(path.relative(config.fonts.demoDestination, destination) + '/')
         };
         // build css
         gulp.src(taskDir + 'template.css')
           .pipe(consolidate('lodash', options))
           .on('error', handleErrors)
           .pipe(rename({ basename: fontName }))
-          .pipe(gulp.dest(destination));
+          .pipe(gulp.dest(config.fonts.demoDestination));
         // build example html
         gulp.src(taskDir + 'template.html')
           .pipe(consolidate('lodash', options))
           .on('error', handleErrors)
           .pipe(rename({ basename: fontName }))
-          .pipe(gulp.dest(destination));
+          .pipe(gulp.dest(config.fonts.demoDestination));
       })
       .on('error', handleErrors)
       .pipe(gulp.dest(destination))
@@ -57,7 +58,7 @@ var createFontTask = function (variant) {
 };
 
 gulp.task('generate-fonts', ['generate-svgs'], (cb) => {
-  var variants = fs.readdirSync(config.source);
+  var variants = fs.readdirSync(config.fonts.source);
   var tasks = [];
 
   variants.forEach((variant) => {

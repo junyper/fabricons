@@ -13,7 +13,7 @@ gulp.task('generate-data', ['generate-svgs'], function () {
 
   formats.push({
     name: 'SVG',
-    demos:  glob.sync(config.svg.destination + '**/*.html').map((file) => {
+    demos:  glob.sync(config.svg.demoDestination + '**/*.html').map((file) => {
               return {
                 path: path.relative(config.destination, file),
                 name: path.basename(file, path.extname(file))
@@ -33,7 +33,7 @@ gulp.task('generate-data', ['generate-svgs'], function () {
 
   formats.push({
     name: 'Font',
-    demos:  glob.sync(config.fonts.destination + '**/*.html')
+    demos:  glob.sync(config.fonts.demoDestination + '**/*.html')
             .map((file) => {
               return {
                 path: path.relative(config.destination, file),

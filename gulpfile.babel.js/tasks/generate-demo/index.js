@@ -40,7 +40,7 @@ var createDemoTask = function (size, variants) {
       .pipe(consolidate('lodash', data))
       .on('error', handleErrors)
       .pipe(rename({ basename: size.name }))
-      .pipe(gulp.dest(destination))
+      .pipe(gulp.dest(config.svg.demoDestination))
       .pipe(browserSync.reload({ stream: true }));
   });
   return key;
