@@ -24,7 +24,7 @@ Fabricons outputs:
 
 - In the .sketch files in `/src/sketch` there are 1920x1920 artboards for each icon set variant. The artboard name is the name of the icon (close, add, etc.) with a prefix of the variant, like `bold/close` and `light/close`.
 
-- When you save in Sketch with the `npm start` script running, the artboards will be exported in SVG to the `./generated` directory, or according to the [configuration](build.config.js), automatically via `gulp-sketch`, creating directories for each variant based on the artboard names.
+- When you save in Sketch with the `npm start` script running, the artboards will be exported in SVG to the `./generated` directory, or according to the [configuration](gulpfile.babel.js/config.js), automatically via `gulp-sketch`, creating directories for each variant based on the artboard names.
 
 - After exporting, gulp will take the SVG files generated for each variant and resize, minify, and package them for various platforms (web, iOS, Android) as individual SVG files, SVG sprites, pdf documents and icon fonts. You can see the result in the `/generated` directory.
 
