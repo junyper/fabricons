@@ -5,7 +5,7 @@ import browserSync from 'browser-sync';
 import logger from '../lib/compile-logger';
 
 gulp.task('webpack-watch', function (cb) {
-  var initialCompile = false;
+  let initialCompile = false;
 
   webpack(webpackMultiConfig('development'))
   .watch(200, (err, stats) => {

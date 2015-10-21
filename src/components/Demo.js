@@ -29,8 +29,8 @@ export default class Demo extends Component {
   }
 
   defaultDemo() {
-    var firstFormat = this.state.formats[0];
-    var firstDemo = (firstFormat) ? firstFormat.demos[0] : null;
+    const firstFormat = this.state.formats[0];
+    const firstDemo = (firstFormat) ? firstFormat.demos[0] : null;
 
     return (firstDemo) ? firstDemo.path : '';
   }

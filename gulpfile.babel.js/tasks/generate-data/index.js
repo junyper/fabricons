@@ -8,7 +8,7 @@ import handleErrors from '../../lib/handle-errors';
 import browserSync from 'browser-sync';
 
 gulp.task('generate-data', ['generate-svgs'], function () {
-  var formats = [];
+  const formats = [];
 
 
   formats.push({

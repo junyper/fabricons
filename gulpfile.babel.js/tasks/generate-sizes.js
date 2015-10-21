@@ -9,12 +9,12 @@ import browserSync from 'browser-sync';
 
 import { svg as config } from '../config';
 
-var getUnits = function (size, box) {
+const getUnits = function (size, box) {
   // Hard coded to 1920 x 1920 SVGs…
-  var boxDelta = box - size;
-  var boundingUnits = ((1920 / size) * boxDelta);
-  var viewBoxValue = 1920 + boundingUnits;
-  var translateDiff = boundingUnits / 2;
+  const boxDelta = box - size;
+  const boundingUnits = ((1920 / size) * boxDelta);
+  const viewBoxValue = 1920 + boundingUnits;
+  const translateDiff = boundingUnits / 2;
 
   return {
     viewBox: `0 0 ${viewBoxValue} ${viewBoxValue}`,
@@ -22,10 +22,10 @@ var getUnits = function (size, box) {
   };
 };
 
-var createSizeTask = function (variant, size) {
-  var key = variant + '-' + size.name;
-  var units = getUnits(size.size, size.box);
-  var path = config.destination + variant;
+const createSizeTask = function (variant, size) {
+  const key = variant + '-' + size.name;
+  const units = getUnits(size.size, size.box);
+  const path = config.destination + variant;
 
   gulp.task(key, () => {
     gulp.src(path + '/*.svg')
@@ -74,8 +74,8 @@ var createSizeTask = function (variant, size) {
 
 
 gulp.task('generate-sizes', ['generate-svgs'], function (cb) {
-  var variants = fs.readdirSync(config.destination);
-  var sizeTasks = [];
+  const variants = fs.readdirSync(config.destination);
+  const sizeTasks = [];
 
   variants.forEach((variant) => {
     config.sizes.forEach((size) => {

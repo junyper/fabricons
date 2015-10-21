@@ -9,13 +9,13 @@ import handleErrors from '../../lib/handle-errors';
 import browserSync from 'browser-sync';
 import path from 'path';
 
-var createFontTask = function (variant) {
-  var key = 'font-' + variant;
-  var taskDir = './gulpfile.babel.js/tasks/generate-fonts/';
-  var destination = config.fonts.destination + variant;
-  var fontName = config.fonts.fontName + variant;
-  var formats = config.fonts.formats;
-  var className = config.fonts.className;
+const createFontTask = function (variant) {
+  const key = 'font-' + variant;
+  const taskDir = './gulpfile.babel.js/tasks/generate-fonts/';
+  const destination = config.fonts.destination + variant;
+  const fontName = config.fonts.fontName + variant;
+  const formats = config.fonts.formats;
+  const className = config.fonts.className;
 
   gulp.task(key, () => {
     return gulp.src(config.fonts.source + variant + '/*.svg')
@@ -26,7 +26,7 @@ var createFontTask = function (variant) {
         formats
       }))
       .on('glyphs', (glyphs) => {
-        var options = {
+        let options = {
           glyphs: glyphs.map((glyph) => {
             return {
               name: glyph.name,
@@ -58,8 +58,8 @@ var createFontTask = function (variant) {
 };
 
 gulp.task('generate-fonts', ['generate-svgs'], (cb) => {
-  var variants = fs.readdirSync(config.fonts.source);
-  var tasks = [];
+  const variants = fs.readdirSync(config.fonts.source);
+  const tasks = [];
 
   variants.forEach((variant) => {
     tasks.push(createFontTask(variant));

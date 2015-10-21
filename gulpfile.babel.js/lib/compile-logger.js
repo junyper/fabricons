@@ -7,7 +7,7 @@ export default function (err, stats) {
     throw new gutil.PluginError('webpack', err);
   }
 
-  var statColor = stats.compilation.warnings.length < 1 ? 'green' : 'yellow';
+  let statColor = stats.compilation.warnings.length < 1 ? 'green' : 'yellow';
 
   if (stats.compilation.errors.length > 0) {
     stats.compilation.errors.forEach((error) => {
@@ -15,7 +15,7 @@ export default function (err, stats) {
       statColor = 'red';
     });
   } else {
-    var compileTime = prettyTime(stats.endTime - stats.startTime);
+    const compileTime = prettyTime(stats.endTime - stats.startTime);
     gutil.log(gutil.colors[statColor](stats));
     gutil.log('Compiled with', gutil.colors.cyan('webpack'), 'in', gutil.colors.magenta(compileTime));
   }

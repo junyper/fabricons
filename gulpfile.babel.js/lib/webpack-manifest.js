@@ -6,12 +6,12 @@ export default function (publicPath, dest, filename) {
 
   return function () {
     this.plugin('done', (stats) => {
-      var stats    = stats.toJson();
-      var chunks   = stats.assetsByChunkName;
-      var manifest = {};
+      stats          = stats.toJson();
+      const chunks   = stats.assetsByChunkName;
+      const manifest = {};
 
-      for (var key in chunks) {
-        var originalFilename = key + '.js';
+      for (let key in chunks) {
+        const originalFilename = key + '.js';
         manifest[path.join(publicPath, originalFilename)] = path.join(publicPath, chunks[key]);
       }
 

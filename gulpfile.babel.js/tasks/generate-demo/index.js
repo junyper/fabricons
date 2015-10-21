@@ -9,23 +9,23 @@ import browserSync from 'browser-sync';
 import glob from 'glob';
 import path from 'path';
 
-var taskDir = './gulpfile.babel.js/tasks/generate-demo/';
+const taskDir = './gulpfile.babel.js/tasks/generate-demo/';
 
-var createDemoTask = function (size, variants) {
-  var key = 'demo-' + size.name;
-  var destination = config.svg.destination;
+const createDemoTask = function (size, variants) {
+  const key = 'demo-' + size.name;
+  const destination = config.svg.destination;
 
   gulp.task(key, () => {
-    var data = {
+    const data = {
       size: `${size.name} ${size.size}pt (${size.box}pt box)`,
       variants: []
     };
 
     variants.forEach((variant) => {
-      var variantData = {
+      const variantData = {
         name: variant
       };
-      var source = path.normalize(destination + variant + '/android/*' + size.suffix + '.svg');
+      const source = path.normalize(destination + variant + '/android/*' + size.suffix + '.svg');
 
       variantData.glyphs = glob.sync(source).map((file) => {
         return {
@@ -47,8 +47,8 @@ var createDemoTask = function (size, variants) {
 };
 
 gulp.task('generate-demo', (cb) => {
-  var variants = fs.readdirSync(config.svg.destination);
-  var tasks = [];
+  const variants = fs.readdirSync(config.svg.destination);
+  const tasks = [];
 
   config.svg.sizes.forEach((size) => {
     tasks.push(

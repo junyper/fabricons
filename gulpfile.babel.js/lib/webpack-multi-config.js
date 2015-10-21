@@ -12,10 +12,10 @@ import postcssDiscardDuplicates from 'postcss-discard-duplicates';
 import CompressionPlugin from 'compression-webpack-plugin';
 
 export default function (env) {
-  var publicPath = '/';
-  var filename = env === 'production' ? '[name]-[hash].js' : '[name].js';
+  const publicPath = '/';
+  const filename = env === 'production' ? '[name]-[hash].js' : '[name].js';
 
-  var webpackConfig = {
+  const webpackConfig = {
     // context: config.source,
     plugins: [
       new HtmlWebpackPlugin({
