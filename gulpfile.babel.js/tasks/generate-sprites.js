@@ -11,7 +11,7 @@ const createSpriteTask = function (variant) {
 
   gulp.task(key, () => {
     return gulp.src(config.source + variant + '/*.svg')
-      .pipe(svgstore())
+      .pipe(svgstore({ inlineSvg: true }))
       .on('error', handleErrors)
       .pipe(gulp.dest(config.destination))
       .pipe(browserSync.reload({ stream: true }));

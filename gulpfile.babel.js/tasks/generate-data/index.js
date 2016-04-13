@@ -21,15 +21,15 @@ gulp.task('generate-data', ['generate-svgs'], function () {
             })
   });
 
-  // formats.push({
-  //   name: 'SVG Sprite',
-  //   demos:  glob.sync(config.sprites.destination + '**/*.svg').map((file) => {
-  //             return {
-  //               path: path.relative(config.destination, file),
-  //               name: path.basename(file, path.extname(file))
-  //             };
-  //           })
-  // });
+  formats.push({
+    name: 'SVG Sprite',
+    demos:  glob.sync(config.sprites.demoDestination + '**/*.html').map((file) => {
+              return {
+                path: path.relative(config.destination, file),
+                name: path.basename(file, path.extname(file))
+              };
+            })
+  });
 
   formats.push({
     name: 'Font',

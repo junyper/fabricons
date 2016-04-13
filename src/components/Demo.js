@@ -8,11 +8,17 @@ export default class Demo extends Component {
     super();
     this.state = {
       formats: [],
-      currentDemo: {
-        path: null
-      }
+      currentDemo: ''
     };
   }
+
+  updateDemo = () => {
+    this.setCurrentDemo(window.location.hash.slice(1) || this.defaultDemo())
+  };
+
+  setCurrentDemo = (demo) => {
+    this.setState({ currentDemo: demo });
+  };
 
   componentDidMount() {
     axios.get('data.json')
@@ -26,18 +32,19 @@ export default class Demo extends Component {
         console.log(response);
       }
     });
+
+    window.addEventListener('hashchange', this.updateDemo, false)
   }
 
-  defaultDemo() {
+  componentWillUnmount () {
+    window.removeEventListener('hashchange', this.updateDemo, false)
+  }
+
+  defaultDemo () {
     const firstFormat = this.state.formats[0];
     const firstDemo = (firstFormat) ? firstFormat.demos[0] : null;
 
     return (firstDemo) ? firstDemo.path : '';
-  }
-
-  setCurrentDemo(event, demo) {
-    this.setState({ currentDemo: demo });
-    event.preventDefault();
   }
 
   renderFormat(format) {
@@ -50,7 +57,8 @@ export default class Demo extends Component {
           {
             format.demos.map(demo =>
               <li key={demo.name} className={styles.demoLinkContainer}>
-                <a href={demo.path} className={styles.demoLink} onClick={event => this.setCurrentDemo(event, demo)}>
+                <a href={'#' + demo.path}
+                  className={styles.demoLink}>
                   {demo.name}
                 </a>
               </li>
@@ -67,7 +75,7 @@ export default class Demo extends Component {
         <nav className={styles.demoNav}>
           { this.state.formats.map(format => this.renderFormat(format)) }
         </nav>
-        <iframe src={this.state.currentDemo.path || this.defaultDemo()} className={styles.demo}></iframe>
+        <iframe src={this.state.currentDemo || this.defaultDemo()} className={styles.demo}></iframe>
       </div>
     );
   }

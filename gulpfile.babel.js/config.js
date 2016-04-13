@@ -24,7 +24,8 @@ const fonts = {
 
 const sprites = {
   source: svg.destination, // variant is added to path
-  destination: destination + 'sprites/'
+  destination: destination + 'sprites/',
+  demoDestination: demoDestination + 'sprites/'
 };
 
 export default {

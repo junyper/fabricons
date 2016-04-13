@@ -9,10 +9,10 @@ import browserSync from 'browser-sync';
 import glob from 'glob';
 import path from 'path';
 
-const taskDir = './gulpfile.babel.js/tasks/generate-demo/';
+const taskDir = './gulpfile.babel.js/tasks/generate-svg-demo/';
 
 const createDemoTask = function (size, variants) {
-  const key = 'demo-' + size.name;
+  const key = 'demo-svg-' + size.name;
   const destination = config.svg.destination;
 
   gulp.task(key, () => {
@@ -46,7 +46,7 @@ const createDemoTask = function (size, variants) {
   return key;
 };
 
-gulp.task('generate-demo', (cb) => {
+gulp.task('generate-svg-demo', (cb) => {
   const variants = fs.readdirSync(config.svg.destination);
   const tasks = [];
 

@@ -19,7 +19,8 @@ gulp.task('build-icons', function (cb) {
 
   sequence(
     tasks,
-    'generate-demo',
+    'generate-svg-demo',
+    'generate-sprites-demo',
     'generate-data',
     cb
   );
