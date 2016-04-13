@@ -4,6 +4,12 @@ import config from '../config';
 
 gulp.task('build-icons', function (cb) {
   const tasks = [];
+  const demos = ['generate-svg-demo']
+
+  if (config.react) {
+    tasks.push('generate-react');
+    // demos.push('generate-react-demos');
+  }
 
   if (config.fonts) {
     tasks.push('generate-fonts');
@@ -11,6 +17,7 @@ gulp.task('build-icons', function (cb) {
 
   if (config.sprites) {
     tasks.push('generate-sprites');
+    demos.push('generate-sprites-demo');
   }
 
   if (config.svg.sizes && config.svg.sizes.length > 0) {
@@ -19,8 +26,7 @@ gulp.task('build-icons', function (cb) {
 
   sequence(
     tasks,
-    'generate-svg-demo',
-    'generate-sprites-demo',
+    demos,
     'generate-data',
     cb
   );

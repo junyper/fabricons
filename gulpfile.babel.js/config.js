@@ -28,10 +28,18 @@ const sprites = {
   demoDestination: demoDestination + 'sprites/'
 };
 
+const react = {
+  source: svg.destination,
+  destination: destination + 'react/',
+  demoDestination: demoDestination + 'react/',
+  componentBaseName: 'Icon'
+};
+
 export default {
   source,
   destination,
   svg,
   fonts,
-  sprites
+  sprites,
+  react
 };

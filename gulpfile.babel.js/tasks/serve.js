@@ -7,6 +7,7 @@ gulp.task('serve', function () {
     server: {
       baseDir: config.destination
     },
+    open: false,
     port: 3002,
     reloadOnRestart: true,
     logLevel: 'info',

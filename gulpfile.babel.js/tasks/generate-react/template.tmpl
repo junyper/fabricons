@@ -1,0 +1,11 @@
+import React from 'react'
+
+export default class <%= name %> extends React.Component {
+  render() {
+    return (
+      <svg viewBox="<%= viewBox %>" {...this.props}>
+        <g><%= svg %></g>
+      </svg>
+    );
+  }
+}
