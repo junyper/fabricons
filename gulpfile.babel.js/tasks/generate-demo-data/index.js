@@ -58,7 +58,7 @@ gulp.task('generate-demo-data', ['generate-svgs'], function () {
       symbols: glob.sync(config.svg.source).map((file) => path.basename(file, path.extname(file))),
       formats
     }))
-    .pipe(rename('data.json'))
+    .pipe(rename('demo.json'))
     .on('error', handleErrors)
     .pipe(gulp.dest(config.destination))
     .pipe(browserSync.reload({ stream: true }));

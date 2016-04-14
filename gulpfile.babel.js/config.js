@@ -1,7 +1,7 @@
 const libraryName = 'Fabricons';
 const demoAppSource = './src/demoApp/';
 const source = './src/';
-const destination = './generated/';
+const destination = './dist/';
 const demoDestination = destination + 'demos/';
 
 const svg = {

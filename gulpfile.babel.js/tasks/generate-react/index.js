@@ -9,9 +9,10 @@ import cheerio from 'gulp-cheerio';
 import handleErrors from '../../lib/handle-errors';
 import browserSync from 'browser-sync';
 import path from 'path';
-import webpack from 'webpack-stream';
+import webpackStrem from 'webpack-stream';
 import named from 'vinyl-named';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import webpack from 'webpack'
 
 const capitalizeFirstLetter = function (string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -106,7 +107,7 @@ const createComponentBuild = function (variant) {
   gulp.task(key, () => {
     return gulp.src(glob.sync(destination + '/*.js'))
       .pipe(named())
-      .pipe(webpack({
+      .pipe(webpackStrem({
         module: {
           loaders: [
             {
@@ -137,6 +138,10 @@ const createComponentBuild = function (variant) {
               amd: 'react-dom'
             }
           }
+        ],
+        plugins: [
+          new webpack.optimize.UglifyJsPlugin(),
+          new webpack.optimize.OccurenceOrderPlugin()
         ]
       }))
       .on('error', handleErrors)
@@ -152,7 +157,7 @@ const createDemoBuild = function (variant) {
   gulp.task(key, () => {
     return gulp.src(config.react.demoDestination + variant + '.js')
       .pipe(named())
-      .pipe(webpack({
+      .pipe(webpackStrem({
         module: {
           loaders: [
             {
@@ -168,7 +173,9 @@ const createDemoBuild = function (variant) {
             template: path.resolve(taskDir, 'template.html'),
             inject: 'body',
             filename: variant + '.html'
-          })
+          }),
+          new webpack.optimize.UglifyJsPlugin(),
+          new webpack.optimize.OccurenceOrderPlugin()
         ]
       }))
       .on('error', handleErrors)

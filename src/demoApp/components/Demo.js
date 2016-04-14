@@ -21,7 +21,7 @@ export default class Demo extends Component {
   };
 
   componentDidMount() {
-    axios.get('data.json')
+    axios.get('demo.json')
     .then((response) => {
       this.setState({ formats: response.data.formats });
     })

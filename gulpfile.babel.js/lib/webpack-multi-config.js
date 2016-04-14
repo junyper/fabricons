@@ -8,22 +8,27 @@ import postcssImport from 'postcss-import';
 import postcssCalc from 'postcss-calc';
 import csswring from 'csswring';
 import postcssDiscardDuplicates from 'postcss-discard-duplicates';
-import CompressionPlugin from 'compression-webpack-plugin';
 
 export default function (env) {
-  const publicPath = '/';
+  const publicPath = '';
   const filename = env === 'production' ? '[name]-[hash].js' : '[name].js';
   const cssLoader = 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss';
 
+  let plugins = [
+    new HtmlWebpackPlugin({
+      title: config.libraryName,
+      template: path.resolve(config.demoAppSource, 'index.html'), // Load a custom template
+      inject: 'body', // Inject all scripts into the body,
+      filename: 'index.html'
+    })
+  ];
+
+  if (env === 'production') {
+    plugins = plugins.concat(new ExtractTextPlugin(filename + '.css'))
+  }
+
   const webpackConfig = {
-    plugins: [
-      new HtmlWebpackPlugin({
-        title: config.libraryName,
-        template: path.resolve(config.demoAppSource, 'index.html'), // Load a custom template
-        inject: 'body', // Inject all scripts into the body,
-        filename: 'index.html'
-      })
-    ],
+    plugins,
     module: {
       preLoaders: [
         {
@@ -80,14 +85,7 @@ export default function (env) {
     webpackConfig.plugins.push(
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin(),
-      new webpack.NoErrorsPlugin(),
-      new CompressionPlugin({
-        asset: '{file}.gz',
-        algorithm: 'gzip',
-        regExp: /\.js$|\.html$/,
-        threshold: 10240,
-        minRatio: 0.8
-      })
+      new webpack.NoErrorsPlugin()
     );
 
     webpackConfig.module.loaders.push(
