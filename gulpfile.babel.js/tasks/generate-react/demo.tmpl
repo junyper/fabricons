@@ -10,7 +10,11 @@ class Demo extends Component {
         <div className="glyph-img">
           <Icon />
         </div>
-        <span className="glyph-name">{icon}</span>
+        <div className="glyph-name">
+          <code>
+             &lt;{icon} /&gt;
+          </code>
+        </div>
       </li>
     )
   }
