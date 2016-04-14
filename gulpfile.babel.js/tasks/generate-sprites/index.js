@@ -8,8 +8,23 @@ import handleErrors from '../../lib/handle-errors';
 import browserSync from 'browser-sync';
 import glob from 'glob';
 import path from 'path';
+import svgstore from 'gulp-svgstore';
 
-const taskDir = './gulpfile.babel.js/tasks/generate-sprites-demo/';
+const taskDir = './gulpfile.babel.js/tasks/generate-sprites/';
+
+const createSpriteTask = function (variant) {
+  const key = 'sprite-' + variant;
+
+  gulp.task(key, () => {
+    return gulp.src(config.sprites.source + variant + '/*.svg')
+      .pipe(svgstore({ inlineSvg: true }))
+      .on('error', handleErrors)
+      .pipe(gulp.dest(config.sprites.destination))
+      .pipe(browserSync.reload({ stream: true }));
+  });
+
+  return key;
+};
 
 const createDemoTask = function (variant) {
   const key = 'demo-sprites-' + variant;
@@ -36,16 +51,19 @@ const createDemoTask = function (variant) {
       .pipe(gulp.dest(config.sprites.demoDestination))
       .pipe(browserSync.reload({ stream: true }));
   });
+
   return key;
 };
 
-gulp.task('generate-sprites-demo', (cb) => {
+gulp.task('generate-sprites', ['generate-svgs'], function (cb) {
   const variants = fs.readdirSync(config.sprites.source);
   const tasks = [];
+  const demos = []
 
   variants.forEach((variant) => {
-    tasks.push(createDemoTask(variant));
+    tasks.push(createSpriteTask(variant));
+    demos.push(createDemoTask(variant));
   });
 
-  sequence(tasks, cb);
+  sequence(tasks, demos, cb);
 });

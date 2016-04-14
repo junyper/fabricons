@@ -7,7 +7,7 @@ import path from 'path';
 import handleErrors from '../../lib/handle-errors';
 import browserSync from 'browser-sync';
 
-gulp.task('generate-data', ['generate-svgs'], function () {
+gulp.task('generate-demo-data', ['generate-svgs'], function () {
   const formats = [];
 
 
@@ -42,7 +42,18 @@ gulp.task('generate-data', ['generate-svgs'], function () {
             })
   });
 
-  return gulp.src('./gulpfile.babel.js/tasks/generate-data/template.json')
+  formats.push({
+    name: 'React',
+    demos:  glob.sync(config.react.demoDestination + '**/*.html')
+            .map((file) => {
+              return {
+                path: path.relative(config.destination, file),
+                name: path.basename(file, path.extname(file))
+              };
+            })
+  });
+
+  return gulp.src('./gulpfile.babel.js/tasks/generate-demo-data/template.json')
     .pipe(jeditor({
       symbols: glob.sync(config.svg.source).map((file) => path.basename(file, path.extname(file))),
       formats

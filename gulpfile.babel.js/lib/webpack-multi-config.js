@@ -1,7 +1,6 @@
 import config from '../config';
 import webpack from 'webpack';
 import path from 'path';
-import webpackManifest from './webpack-manifest';
 import postcssTools from 'webpack-postcss-tools';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
@@ -14,12 +13,13 @@ import CompressionPlugin from 'compression-webpack-plugin';
 export default function (env) {
   const publicPath = '/';
   const filename = env === 'production' ? '[name]-[hash].js' : '[name].js';
+  const cssLoader = 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss';
 
   const webpackConfig = {
-    // context: config.source,
     plugins: [
       new HtmlWebpackPlugin({
-        template: path.resolve(config.source, 'index.html'), // Load a custom template
+        title: config.libraryName,
+        template: path.resolve(config.demoAppSource, 'index.html'), // Load a custom template
         inject: 'body', // Inject all scripts into the body,
         filename: 'index.html'
       })
@@ -35,7 +35,7 @@ export default function (env) {
       loaders: [
         {
           test: /\.js$/,
-          loader: 'babel?optional=runtime&stage=1',
+          loader: 'babel',
           exclude: /node_modules/
         },
         {
@@ -46,19 +46,15 @@ export default function (env) {
       ]
     },
     postcss: [
-      // Plugins seem to be first in last out
-      // https://github.com/postcss/postcss#plugins
       postcssTools.prependTildesToImports,
-
       require('autoprefixer')({ browsers: ['last 2 version'] }),
     ]
   };
 
   if (env !== 'test') {
-    // Karma doesn't need entry points or output settings
     webpackConfig.entry = {
       demo: [
-        path.resolve(config.source, 'index.js')
+        path.resolve(config.demoAppSource, 'index.js')
       ]
     };
 
@@ -67,32 +63,21 @@ export default function (env) {
       filename,
       publicPath
     };
-
-    // Factor out common dependencies into a common.js
-    webpackConfig.plugins.push(
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'common',
-        filename,
-      })
-    );
   }
 
   if (env === 'development') {
-    webpackConfig.devtool = 'source-map';
+    webpack.devtool = 'cheap-module-eval-source-map';
     webpack.debug = true;
-
-
     webpackConfig.module.loaders.push(
       {
         test: /\.css$/,
-        loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss'
+        loader: 'style!' + cssLoader
       }
     );
   }
 
   if (env === 'production') {
     webpackConfig.plugins.push(
-      new webpackManifest(publicPath, config.destination),
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin(),
       new webpack.NoErrorsPlugin(),
@@ -110,18 +95,17 @@ export default function (env) {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract(
           'style',
-          'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss'
+          cssLoader
         )
       }
     );
 
     webpackConfig.postcss = [
       postcssImport,
-      postcssCalc()
-    ].concat(config.postcss).concat([
+      postcssCalc(),
       csswring,
       postcssDiscardDuplicates()
-    ]);
+    ];
   }
 
   return webpackConfig;

@@ -46,7 +46,7 @@ const createDemoTask = function (size, variants) {
   return key;
 };
 
-gulp.task('generate-svg-demo', (cb) => {
+gulp.task('generate-svg-demo', ['generate-svgs'], (cb) => {
   const variants = fs.readdirSync(config.svg.destination);
   const tasks = [];
 

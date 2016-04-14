@@ -1,3 +1,5 @@
+const libraryName = 'Fabricons';
+const demoAppSource = './src/demoApp/';
 const source = './src/';
 const destination = './generated/';
 const demoDestination = destination + 'demos/';
@@ -17,7 +19,7 @@ const fonts = {
   source: svg.destination, // variant is added to path
   destination: destination + 'fonts/',
   demoDestination: demoDestination + 'fonts/',
-  fontName: 'Icons',
+  fontName: libraryName,
   className: 'icon',
   formats: ['woff2', 'woff', 'eot', 'ttf', 'svg']
 };
@@ -36,8 +38,10 @@ const react = {
 };
 
 export default {
+  demoAppSource,
   source,
   destination,
+  libraryName,
   svg,
   fonts,
   sprites,

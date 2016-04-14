@@ -33,6 +33,8 @@ export default class Demo extends Component {
       }
     });
 
+    this.updateDemo()
+
     window.addEventListener('hashchange', this.updateDemo, false)
   }
 

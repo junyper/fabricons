@@ -7,7 +7,7 @@ import fs from 'fs';
 import handleErrors from '../lib/handle-errors';
 import browserSync from 'browser-sync';
 
-import { svg as config } from '../config';
+import config from '../config';
 
 const getUnits = function (size, box) {
   // Hard coded to 1920 x 1920 SVGs…
@@ -25,7 +25,7 @@ const getUnits = function (size, box) {
 const createSizeTask = function (variant, size) {
   const key = variant + '-' + size.name;
   const units = getUnits(size.size, size.box);
-  const path = config.destination + variant;
+  const path = config.svg.destination + variant;
 
   gulp.task(key, () => {
     gulp.src(path + '/*.svg')
@@ -74,11 +74,11 @@ const createSizeTask = function (variant, size) {
 
 
 gulp.task('generate-sizes', ['generate-svgs'], function (cb) {
-  const variants = fs.readdirSync(config.destination);
+  const variants = fs.readdirSync(config.svg.destination);
   const sizeTasks = [];
 
   variants.forEach((variant) => {
-    config.sizes.forEach((size) => {
+    config.svg.sizes.forEach((size) => {
       sizeTasks.push(
         createSizeTask(variant, size)
       );

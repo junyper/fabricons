@@ -5,10 +5,10 @@ import cheerio from 'gulp-cheerio';
 import handleErrors from '../lib/handle-errors';
 import browserSync from 'browser-sync';
 
-import { svg as config } from '../config';
+import config from '../config';
 
 gulp.task('generate-svgs', function () {
-  return gulp.src(config.source)
+  return gulp.src(config.svg.source)
     // export svgs from sketch source
     .pipe(sketch({
       'export': 'artboards',
@@ -37,7 +37,7 @@ gulp.task('generate-svgs', function () {
       }
     }))
     .on('error', handleErrors)
-    .pipe(gulp.dest(config.destination))
+    .pipe(gulp.dest(config.svg.destination))
     .pipe(browserSync.reload({ stream: true }));
 });
 
