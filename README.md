@@ -2,16 +2,19 @@
 
 Note: This is a WIP...
 
-Generates one or more icon sets from Sketch files for multiple platforms (web, iOS, Android) and provides a local web application for testing the output.
+Generates one or more icon sets from Sketch files for multiple platforms (web, iOS, Android) and provides a local web application for testing the output. (see the [demo](http://junyper.github.io/fabricons) page for an example)
 
 Fabricons outputs:
 
 - SVG files, icon font and SVG sprite optimized for web
 - SVG files with [configurable](gulpfile.babel.js/config.js) bounding boxes/margins for Android
 - PDF files with [configurable](gulpfile.babel.js/config.js) bounding boxes/margins for iOS
+- SVG sprites
+- Accessible React components for each icon/variant
 
 ## Requirements
 
+- Node v5.10.1
 - Mac OSX
 - [Sketch](http://bohemiancoding.com/sketch/)
 
@@ -26,7 +29,7 @@ Fabricons outputs:
 
 - When you save in Sketch with the `npm start` script running, the artboards will be exported in SVG to the `./generated` directory, or according to the [configuration](gulpfile.babel.js/config.js), automatically via `gulp-sketch`, creating directories for each variant based on the artboard names.
 
-- After exporting, gulp will take the SVG files generated for each variant and resize, minify, and package them for various platforms (web, iOS, Android) as individual SVG files, SVG sprites, pdf documents and icon fonts. You can see the result in the `/generated` directory.
+- After exporting, the build will take the SVG files generated for each variant and resize, minify, and package them for various platforms (web, iOS, Android) as individual SVG files, SVG sprites, pdf documents and icon fonts. You can see the result in the `/generated` directory.
 
 ## Adding and Modifying Icons
 
@@ -64,3 +67,4 @@ If you ran `npm start`, you're already running the web app. Just visit [localhos
 
 - Originally forked from Trello's [iconathon](https://github.com/trello/iconathon)
 - [symbols-for-sketch](https://github.com/cognitom/symbols-for-sketch)
+- [react-icons](https://github.com/gorangajic/react-icons)

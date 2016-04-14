@@ -5,6 +5,7 @@
   "scripts": {
     "start": "gulp",
     "test": "eslint src",
+    "build": "gulp build",
     "upgrade": "npm-check-updates -u && npm test",
     "deploy": "gulp deploy"
   },
