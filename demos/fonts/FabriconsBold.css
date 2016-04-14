@@ -1,0 +1,40 @@
+@font-face {
+  font-family: "FabriconsBold";
+  src: url('../../fonts/Bold/FabriconsBold.eot');
+  src: url('../../fonts/Bold/FabriconsBold.eot?#iefix') format('eot'),
+    url('../../fonts/Bold/FabriconsBold.woff') format('woff'),
+    url('../../fonts/Bold/FabriconsBold.ttf') format('truetype'),
+    url('../../fonts/Bold/FabriconsBold.svg#FabriconsBold') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.icon:before {
+  display: inline-block;
+  font-family: "FabriconsBold";
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-lg {
+  font-size: 1.3333333333333333em;
+  line-height: 0.75em;
+  vertical-align: -15%;
+}
+.icon-2x { font-size: 2em; }
+.icon-3x { font-size: 3em; }
+.icon-4x { font-size: 4em; }
+.icon-5x { font-size: 5em; }
+.icon-fw {
+  width: 1.2857142857142858em;
+  text-align: center;
+}
+
+.icon-add:before { content: "\EA01" }
+.icon-back:before { content: "\EA02" }
+.icon-check:before { content: "\EA03" }
+.icon-close:before { content: "\EA04" }
+.icon-twitter:before { content: "\EA05" }
