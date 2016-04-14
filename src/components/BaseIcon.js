@@ -62,6 +62,7 @@ export default class BaseIcon extends Component {
 
   render() {
     const {
+      title,
       width,
       height,
       viewBox
@@ -71,6 +72,7 @@ export default class BaseIcon extends Component {
         width={width}
         height={height}
         viewBox={viewBox}
+        aria-hidden={title ? null : 'true'}
         aria-labelledby={this.labelledBy}
         role={this.role}>
         {this.renderTitle()}
