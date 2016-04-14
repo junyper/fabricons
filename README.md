@@ -1,7 +1,5 @@
 # Fabricons
 
-Note: This is a WIP...
-
 Generates one or more icon sets from Sketch files for multiple platforms (web, iOS, Android) and provides a local web application for testing the output. (see the [demo](http://junyper.github.io/fabricons) page for an example)
 
 Fabricons outputs:
@@ -61,7 +59,7 @@ Fabricons outputs:
 
 There's a small web app for testing all the icons. You can see all the icons at once, in different sizes and formats.
 
-If you ran `npm start`, you're already running the web app. Just visit [localhost:2992](http://localhost:3002).
+If you ran `npm start`, you're already running the web app. Just visit [localhost:3002](http://localhost:3002).
 
 ## Inspiration
 
