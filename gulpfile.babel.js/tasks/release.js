@@ -12,6 +12,13 @@ gulp.task('release', ['build'], function () {
     }))
     .pipe(gulp.dest(config.destination))
     .pipe(spawn({
+      cmd: 'cp',
+      args: [
+        'README.md',
+        config.destination
+      ]
+    }))
+    .pipe(spawn({
       cmd: 'npm',
       args: [
         'publish',
