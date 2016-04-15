@@ -1,7 +1,7 @@
 const libraryName = 'Fabricons';
 const demoAppSource = './src/demoApp/';
 const source = './src/';
-const destination = './dist/';
+const destination = './__build__/';
 const demoDestination = destination + 'demos/';
 
 const svg = {
@@ -32,7 +32,8 @@ const sprites = {
 
 const react = {
   source: svg.destination,
-  destination: destination + 'react/',
+  destination: destination + 'src/',
+  dist: destination + 'dist/',
   demoDestination: demoDestination + 'react/',
   componentBaseName: 'Icon'
 };

@@ -4,7 +4,7 @@ import webpackMultiConfig from '../lib/webpack-multi-config';
 import browserSync from 'browser-sync';
 import logger from '../lib/compile-logger';
 
-gulp.task('webpack-watch', function (cb) {
+gulp.task('webpack-watch', ['generate-demo-data'], function (cb) {
   let initialCompile = false;
 
   webpack(webpackMultiConfig('development'))

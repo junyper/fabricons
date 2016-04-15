@@ -20,6 +20,8 @@ const capitalizeFirstLetter = function (string) {
 
 const taskDir = './gulpfile.babel.js/tasks/generate-react/';
 
+const baseIconFileName = config.react.componentBaseName + 'Base';
+
 const createReactComponentsTask = function (variant) {
   const key = 'react-components-' + variant;
   const destination = config.react.destination + variant;
@@ -32,6 +34,7 @@ const createReactComponentsTask = function (variant) {
           const $svg = $('svg')
           const componentName = componentBaseName + capitalizeFirstLetter(path.basename(file.path, '.svg'))
           const data = {
+            baseIconPath: path.relative(destination, path.join(config.react.destination, baseIconFileName)),
             name: componentName,
             viewBox: $svg.attr('viewBox'),
             svg: $svg.html()
@@ -54,16 +57,20 @@ const createReactComponentsTask = function (variant) {
 };
 
 const createReactBundle = function (variant) {
-  const key = 'react-bundle-' + variant;
+  variant = variant || '';
+
+  const key = 'react-bundle' + (variant ? '-' + variant : '');
   const destination = config.react.destination + variant;
+  const glyphsPath = path.normalize(destination + '/**/' + config.react.componentBaseName + '*.js')
 
   gulp.task(key, () => {
-    const glyphs = glob.sync(destination + '/' + config.react.componentBaseName + '*.js').map((filepath) => {
+    const glyphs = glob.sync(glyphsPath).map((filepath) => {
       return {
-        name: path.basename(filepath, '.js')
+        name: path.basename(filepath, '.js'),
+        path: path.relative(destination, filepath)
       }
     });
-    return gulp.src(taskDir + 'variant.tmpl')
+    return gulp.src(taskDir + 'bundle.tmpl')
       .pipe(consolidate('lodash', { glyphs: glyphs }))
       .pipe(rename({ basename: 'index', extname: '.js' }))
       .on('error', handleErrors)
@@ -101,11 +108,14 @@ const createReactDemo = function (variant) {
 };
 
 const createComponentBuild = function (variant) {
-  const key = 'react-build-' + variant;
-  const destination = config.react.destination + variant;
+  variant = variant || '';
+
+  const key = 'react-build' + (variant ? '-' + variant : '');
+  const source = config.react.destination + variant;
+  const destination = config.react.dist + variant;
 
   gulp.task(key, () => {
-    return gulp.src(glob.sync(destination + '/*.js'))
+    return gulp.src(glob.sync(source + '/*.js'))
       .pipe(named())
       .pipe(webpackStrem({
         module: {
@@ -185,6 +195,18 @@ const createDemoBuild = function (variant) {
   return key;
 }
 
+const copyBaseIconSrc = function () {
+  const key = 'react-copy-base';
+
+  gulp.task(key, () => {
+    return gulp.src(path.join(__dirname, '../../../src/components/BaseIcon.js'))
+      .pipe(rename({ basename: baseIconFileName }))
+      .pipe(gulp.dest(config.react.destination))
+  })
+
+  return key;
+}
+
 gulp.task('generate-react', ['generate-svgs'], (cb) => {
   const variants = fs.readdirSync(config.react.source);
   const componentTasks = [];
@@ -193,13 +215,18 @@ gulp.task('generate-react', ['generate-svgs'], (cb) => {
   const buildTasks = [];
   const demoBuildTasks = [];
 
+  componentTasks.push(copyBaseIconSrc())
+
   variants.forEach((variant) => {
     componentTasks.push(createReactComponentsTask(variant));
     bundleTasks.push(createReactBundle(variant));
     buildTasks.push(createComponentBuild(variant));
     demoTasks.push(createReactDemo(variant));
-    demoBuildTasks.push(createDemoBuild(variant))
+    demoBuildTasks.push(createDemoBuild(variant));
   });
+
+  bundleTasks.push(createReactBundle());
+  buildTasks.push(createComponentBuild());
 
   sequence(componentTasks, bundleTasks, buildTasks, demoTasks, demoBuildTasks, cb);
 });
