@@ -7,3 +7,4 @@ export IconLightAdd from './Light/IconLightAdd.js';
 export IconLightBack from './Light/IconLightBack.js';
 export IconLightCheck from './Light/IconLightCheck.js';
 export IconLightClose from './Light/IconLightClose.js';
+export IconLightTwitter from './Light/IconLightTwitter.js';
