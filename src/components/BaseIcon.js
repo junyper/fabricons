@@ -13,8 +13,8 @@ export default class BaseIcon extends Component {
   };
 
   static defaultProps = {
-    width: '2rem',
-    height: '2rem'
+    width: '1em',
+    height: '1em'
   };
 
   constructor (props) {
@@ -67,8 +67,12 @@ export default class BaseIcon extends Component {
       height,
       viewBox
     } = this.props
+    const style = {
+      fill: 'currentColor'
+    }
     return (
       <svg
+        style={style}
         width={width}
         height={height}
         viewBox={viewBox}
