@@ -1,6 +1,6 @@
 {
   "name": "fabricons",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Generate icon sets for multiple platforms from Sketch files",
   "scripts": {
     "start": "gulp",
