@@ -7,7 +7,6 @@ import rename from 'gulp-rename';
 import config from '../../config';
 import cheerio from 'gulp-cheerio';
 import handleErrors from '../../lib/handle-errors';
-import browserSync from 'browser-sync';
 import path from 'path';
 import webpackStrem from 'webpack-stream';
 import named from 'vinyl-named';
@@ -100,8 +99,7 @@ const createReactDemo = function (variant) {
       }))
       .pipe(rename({ basename: variant, extname: '.js' }))
       .on('error', handleErrors)
-      .pipe(gulp.dest(config.react.demoDestination))
-      .pipe(browserSync.reload({ stream: true }));
+      .pipe(gulp.dest(config.react.demoDestination));
   });
 
   return key;

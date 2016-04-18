@@ -5,7 +5,6 @@ import sequence from 'gulp-sequence';
 import convert from 'gulp-rsvg';
 import fs from 'fs';
 import handleErrors from '../lib/handle-errors';
-import browserSync from 'browser-sync';
 
 import config from '../config';
 
@@ -65,9 +64,7 @@ const createSizeTask = function (variant, size) {
     }))
     .pipe(convert({ format: 'pdf' }))
     .on('error', handleErrors)
-    .pipe(gulp.dest(path + '/ios/'))
-
-    .pipe(browserSync.reload({ stream: true }));
+    .pipe(gulp.dest(path + '/ios/'));
   });
   return key;
 };

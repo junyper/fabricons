@@ -5,7 +5,6 @@ import sequence from 'gulp-sequence';
 import rename from 'gulp-rename';
 import config from '../../config';
 import handleErrors from '../../lib/handle-errors';
-import browserSync from 'browser-sync';
 import glob from 'glob';
 import path from 'path';
 import svgstore from 'gulp-svgstore';
@@ -19,8 +18,7 @@ const createSpriteTask = function (variant) {
     return gulp.src(config.sprites.source + variant + '/*.svg')
       .pipe(svgstore({ inlineSvg: true }))
       .on('error', handleErrors)
-      .pipe(gulp.dest(config.sprites.destination))
-      .pipe(browserSync.reload({ stream: true }));
+      .pipe(gulp.dest(config.sprites.destination));
   });
 
   return key;
@@ -48,8 +46,7 @@ const createDemoTask = function (variant) {
       .pipe(consolidate('lodash', data))
       .on('error', handleErrors)
       .pipe(rename({ basename: variant }))
-      .pipe(gulp.dest(config.sprites.demoDestination))
-      .pipe(browserSync.reload({ stream: true }));
+      .pipe(gulp.dest(config.sprites.demoDestination));
   });
 
   return key;

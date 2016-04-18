@@ -3,7 +3,6 @@ import sketch from 'gulp-sketch';
 import svgmin from 'gulp-svgmin';
 import cheerio from 'gulp-cheerio';
 import handleErrors from '../lib/handle-errors';
-import browserSync from 'browser-sync';
 
 import config from '../config';
 
@@ -37,8 +36,7 @@ gulp.task('generate-svgs', function () {
       }
     }))
     .on('error', handleErrors)
-    .pipe(gulp.dest(config.svg.destination))
-    .pipe(browserSync.reload({ stream: true }));
+    .pipe(gulp.dest(config.svg.destination));
 });
 
 

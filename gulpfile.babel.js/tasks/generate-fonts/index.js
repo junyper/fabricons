@@ -6,7 +6,6 @@ import sequence from 'gulp-sequence';
 import rename from 'gulp-rename';
 import config from '../../config';
 import handleErrors from '../../lib/handle-errors';
-import browserSync from 'browser-sync';
 import path from 'path';
 
 const createFontTask = function (variant) {
@@ -51,8 +50,7 @@ const createFontTask = function (variant) {
           .pipe(gulp.dest(config.fonts.demoDestination));
       })
       .on('error', handleErrors)
-      .pipe(gulp.dest(destination))
-      .pipe(browserSync.reload({ stream: true }));
+      .pipe(gulp.dest(destination));
   });
   return key;
 };

@@ -5,7 +5,6 @@ import config from '../../config';
 import glob from 'glob';
 import path from 'path';
 import handleErrors from '../../lib/handle-errors';
-import browserSync from 'browser-sync';
 
 gulp.task('generate-demo-data', ['generate-svgs'], function () {
   const formats = [];
@@ -60,6 +59,5 @@ gulp.task('generate-demo-data', ['generate-svgs'], function () {
     }))
     .pipe(rename('demo.json'))
     .on('error', handleErrors)
-    .pipe(gulp.dest(config.destination))
-    .pipe(browserSync.reload({ stream: true }));
+    .pipe(gulp.dest(config.destination));
 });
